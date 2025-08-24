@@ -17,6 +17,7 @@ class ReviewTemplateFactory extends Factory
     public function definition(): array
     {
         return [
+            'created_by' => \App\Models\User::factory(),
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'criteria' => [

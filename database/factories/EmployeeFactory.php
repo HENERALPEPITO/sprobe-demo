@@ -17,7 +17,7 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 1, // This will be the test user's ID
+            'user_id' => \App\Models\User::factory(),  // Create a user if none exists
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
