@@ -195,11 +195,6 @@ docker-compose exec app php artisan test --coverage
 3. For permission issues:
    - Fix storage permissions: `docker-compose exec app chown -R www-data:www-data storage bootstrap/cache`
 
-## Contributing
-
-1. Create a new branch
-2. Make your changes
-3. Submit a pull request
 
 ## License
 
