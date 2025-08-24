@@ -10,9 +10,8 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::orderBy('last_name')
-            ->paginate(10)
-            ->through(function ($employee) {
+        try {
+            $employees = Employee::orderBy('last_name')->get()->map(function ($employee) {
                 return [
                     'id' => $employee->id,
                     'first_name' => $employee->first_name,
@@ -23,14 +22,21 @@ class EmployeeController extends Controller
                     'hire_date' => $employee->hire_date,
                     'status' => $employee->status,
                 ];
-            });
+            })->toArray();
             
-        return Inertia::render('Employees/index', [
-            'employees' => $employees
-        ]);
+            \Log::info('Employee count: ' . count($employees));
+            \Log::debug('Employee data: ' . json_encode($employees));
+            
+            return Inertia::render('Employees/index', [
+                'employees' => $employees
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching employees: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to fetch employees.');
+        }
     }
-
-    public function store(Request $request)
+    
+        public function store(Request $request)
     {
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
