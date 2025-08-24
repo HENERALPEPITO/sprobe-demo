@@ -204,3 +204,7 @@ docker-compose exec app php artisan test --coverage
 ## License
 
 [MIT License](LICENSE.md)
+
+<img width="781" height="541" alt="Sprobe_Demo drawio" src="https://github.com/user-attachments/assets/f5f74741-8f8b-4883-ae34-6205d48eca53" />
+
+
