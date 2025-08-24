@@ -13,6 +13,22 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * Get the employee associated with the user (One-To-One)
+     */
+
+    /**
+     * Get the review templates created by this user (One-To-Many)
+     */
+    public function createdReviewTemplates()
+    {
+        return $this->hasMany(ReviewTemplate::class, 'created_by');
+    }
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>

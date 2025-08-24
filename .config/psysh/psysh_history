@@ -1,0 +1,2 @@
+docker-compose exec db mysql -uroot -p1234 -e "show databases;"
+docker-compose exec app php artisan migrate:fresh --seed
