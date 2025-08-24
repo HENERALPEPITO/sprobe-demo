@@ -1,6 +1,8 @@
 # Sprobe Demo Application
 
 This is a Laravel application with React frontend, using Docker for development environment.
+<img width="781" height="541" alt="Sprobe_Demo drawio" src="https://github.com/user-attachments/assets/b0d146bc-0145-4423-b83f-48628ae00faa" />
+
 
 ## Prerequisites
 
