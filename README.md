@@ -10,11 +10,33 @@ This is a Laravel application with React frontend, using Docker for development 
 
 ## Setup Instructions
 
-1. Clone the repository:
+### Quick Start (Development)
+
+1. Clone and setup:
 ```bash
+# Clone the repository
 git clone https://github.com/HENERALPEPITO/sprobe-demo.git
 cd sprobe-demo
+
+# Copy environment file
+cp .env.example .env
+
+# Start Docker containers
+docker-compose up -d
+
+# Install dependencies and setup application
+docker-compose exec app composer install
+npm install
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate:fresh --seed
+npm run build
 ```
+
+2. Visit http://localhost:8000 and log in with:
+   - Email: test@example.com
+   - Password: password
+
+### Detailed Setup Instructions
 
 2. Copy the environment file:
 ```bash
@@ -128,12 +150,43 @@ npm run dev
 npm run build
 ```
 
+## Project Features
+
+1. Employee Management
+   - List, create, update, and delete employees
+   - Track employee information including position and department
+   - Employee status management
+
+2. Review Templates
+   - Create and manage review templates
+   - Assign templates to employees
+   - Track review status and history
+
+3. User Authentication
+   - Secure login and registration
+   - Password reset functionality
+   - User profile management
+
+## Running Tests
+
+```bash
+# Run all tests
+docker-compose exec app php artisan test
+
+# Run specific test file
+docker-compose exec app php artisan test --filter EmployeeTest
+
+# Run tests with coverage report
+docker-compose exec app php artisan test --coverage
+```
+
 ## Troubleshooting
 
 1. If you encounter database connection issues:
    - Ensure MySQL container is running: `docker-compose ps`
    - Check MySQL logs: `docker-compose logs db`
    - Verify database credentials in `.env`
+   - Try resetting the database: `docker-compose exec app php artisan migrate:fresh --seed`
 
 2. If the application shows a blank page:
    - Check if frontend assets are built: Run `npm run build`
