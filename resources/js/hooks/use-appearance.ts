@@ -44,13 +44,22 @@ export function useAppearance() {
 }
 
 export function initializeTheme() {
-    const stored = localStorage.getItem('appearance') as Appearance | null;
-    const appearance = stored || 'system';
-    const appliedAppearance = getAppliedAppearance(appearance);
+    try {
+        const stored = localStorage.getItem('appearance') as Appearance | null;
+        const appearance = stored || 'system';
+        const appliedAppearance = getAppliedAppearance(appearance);
 
-    if (appliedAppearance === 'dark') {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
+        if (appliedAppearance === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Set a default cookie if none exists
+        if (!document.cookie.includes('appearance')) {
+            document.cookie = `appearance=${appearance};path=/;max-age=31536000`;
+        }
+    } catch (error) {
+        console.error('Error initializing theme:', error);
     }
 }

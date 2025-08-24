@@ -24,7 +24,10 @@ interface Employee {
     status: string;
 }
 
+import { Head } from '@inertiajs/react';
+
 export default function Employees({ employees = [] }: { employees: Employee[] }) {
+    console.log('Employees data:', employees);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
@@ -47,7 +50,8 @@ export default function Employees({ employees = [] }: { employees: Employee[] })
 
     return (
         <AppLayout breadcrumbs={[{ title: 'Employees', href: '/employees' }]}>
-            <div className="container">
+            <Head title="Employees" />
+            <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center mb-4">
                     <h1 className="text-3xl font-bold">Employees</h1>
                     <Button onClick={() => setShowAddModal(true)}>Add Employee</Button>
@@ -122,69 +126,63 @@ export default function Employees({ employees = [] }: { employees: Employee[] })
                             <CardContent>
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     <div>
-                                        <label className="block mb-1">First Name</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">First Name</label>
+                                        <Input
                                             type="text"
-                                            className="w-full border rounded p-2 bg-background text-foreground"
                                             value={form.data.first_name}
                                             onChange={e => form.setData('first_name', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Last Name</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Last Name</label>
+                                        <Input
                                             type="text"
-                                            className="w-full border rounded p-2"
                                             value={form.data.last_name}
                                             onChange={e => form.setData('last_name', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Email</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Email</label>
+                                        <Input
                                             type="email"
-                                            className="w-full border rounded p-2"
                                             value={form.data.email}
                                             onChange={e => form.setData('email', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Position</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Position</label>
+                                        <Input
                                             type="text"
-                                            className="w-full border rounded p-2"
                                             value={form.data.position}
                                             onChange={e => form.setData('position', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Department</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Department</label>
+                                        <Input
                                             type="text"
-                                            className="w-full border rounded p-2"
                                             value={form.data.department}
                                             onChange={e => form.setData('department', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Hire Date</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Hire Date</label>
+                                        <Input
                                             type="date"
-                                            className="w-full border rounded p-2"
                                             value={form.data.hire_date}
                                             onChange={e => form.setData('hire_date', e.target.value)}
                                         />
                                     </div>
-                                    <div className="flex justify-end space-x-2">
-                                        <Button
-                                            type="button"
+                                    <div className="flex justify-end gap-2">
+                                        <Button 
+                                            type="button" 
                                             variant="outline"
                                             onClick={() => setShowAddModal(false)}
                                         >
                                             Cancel
                                         </Button>
                                         <Button type="submit" disabled={form.processing}>
-                                            Save Employee
+                                            {form.processing ? 'Saving...' : 'Save Employee'}
                                         </Button>
                                     </div>
                                 </form>
@@ -200,76 +198,77 @@ export default function Employees({ employees = [] }: { employees: Employee[] })
                                 <CardTitle>Edit Employee</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <form onSubmit={(e) => {
-                                    e.preventDefault();
-                                    router.put(`/employees/${selectedEmployee.id}`, form.data, {
-                                        onSuccess: () => setShowEditModal(false),
-                                    });
-                                }} className="space-y-4">
+                                <form 
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        router.put(`/employees/${selectedEmployee.id}`, form.data, {
+                                            onSuccess: () => setShowEditModal(false),
+                                        });
+                                    }} 
+                                    className="space-y-4"
+                                >
                                     <div>
-                                        <label className="block mb-1">First Name</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">First Name</label>
+                                        <Input
                                             type="text"
-                                            className="w-full border rounded p-2 bg-background text-foreground"
-                                            value={form.data.first_name}
+                                            value={form.data.first_name || selectedEmployee.first_name}
                                             onChange={e => form.setData('first_name', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Last Name</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Last Name</label>
+                                        <Input
                                             type="text"
-                                            className="w-full border rounded p-2"
-                                            value={form.data.last_name}
+                                            value={form.data.last_name || selectedEmployee.last_name}
                                             onChange={e => form.setData('last_name', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Email</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Email</label>
+                                        <Input
                                             type="email"
-                                            className="w-full border rounded p-2"
-                                            value={form.data.email}
+                                            value={form.data.email || selectedEmployee.email}
                                             onChange={e => form.setData('email', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Position</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Position</label>
+                                        <Input
                                             type="text"
-                                            className="w-full border rounded p-2"
-                                            value={form.data.position}
+                                            value={form.data.position || selectedEmployee.position}
                                             onChange={e => form.setData('position', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Department</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Department</label>
+                                        <Input
                                             type="text"
-                                            className="w-full border rounded p-2"
-                                            value={form.data.department}
+                                            value={form.data.department || selectedEmployee.department}
                                             onChange={e => form.setData('department', e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block mb-1">Hire Date</label>
-                                        <input
+                                        <label className="block text-sm font-medium mb-1">Hire Date</label>
+                                        <Input
                                             type="date"
-                                            className="w-full border rounded p-2"
-                                            value={form.data.hire_date}
+                                            value={form.data.hire_date || selectedEmployee.hire_date}
                                             onChange={e => form.setData('hire_date', e.target.value)}
                                         />
                                     </div>
-                                    <div className="flex justify-end space-x-2">
-                                        <Button
-                                            type="button"
+                                    <div className="flex justify-end gap-2">
+                                        <Button 
+                                            type="button" 
                                             variant="outline"
-                                            onClick={() => setShowEditModal(false)}
+                                            onClick={() => {
+                                                setShowEditModal(false);
+                                                setSelectedEmployee(null);
+                                                form.reset();
+                                            }}
                                         >
                                             Cancel
                                         </Button>
                                         <Button type="submit" disabled={form.processing}>
-                                            Update Employee
+                                            {form.processing ? 'Updating...' : 'Update Employee'}
                                         </Button>
                                     </div>
                                 </form>
