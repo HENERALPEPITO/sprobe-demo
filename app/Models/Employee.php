@@ -41,4 +41,12 @@ class Employee extends Model
             ->withPivot('status', 'completed_at')
             ->withTimestamps();
     }
+
+    /**
+     * Get the files uploaded for this employee
+     */
+    public function files()
+    {
+        return $this->hasMany(FileUpload::class);
+    }
 }

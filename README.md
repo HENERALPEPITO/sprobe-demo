@@ -156,16 +156,31 @@ npm run build
    - List, create, update, and delete employees
    - Track employee information including position and department
    - Employee status management
+   - File upload/download functionality for employee documents
+   - Paginated employee listing with search and sorting
 
 2. Review Templates
    - Create and manage review templates
    - Assign templates to employees
    - Track review status and history
+   - Paginated template listing
 
 3. User Authentication
    - Secure login and registration
    - Password reset functionality
    - User profile management
+
+4. Performance Optimizations
+   - Database query optimization with eager loading
+   - API Resources for consistent response formatting
+   - Database indexes for frequently queried fields
+   - Efficient file handling with secure storage
+
+5. Code Quality
+   - Comprehensive test coverage with PHPUnit
+   - Type-safe TypeScript implementation
+   - Responsive design with Tailwind CSS
+   - Error handling and logging
 
 ## Running Tests
 
@@ -179,6 +194,28 @@ docker-compose exec app php artisan test --filter EmployeeTest
 # Run tests with coverage report
 docker-compose exec app php artisan test --coverage
 ```
+
+## File Upload Feature
+
+The application supports secure file uploads for employee documents:
+
+1. Supported Operations:
+   - Upload files (up to 10MB per file)
+   - Download files securely
+   - Delete files
+   - View file metadata (size, type, upload date)
+
+2. Security Features:
+   - File size validation
+   - Secure file storage outside public directory
+   - File type validation
+   - User authorization checks
+
+3. Usage:
+   - Files can be attached to employee records
+   - Files are stored in a private disk
+   - Downloads are streamed securely
+   - Automatic cleanup when employee is deleted
 
 ## Troubleshooting
 

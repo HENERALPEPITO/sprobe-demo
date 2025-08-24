@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReviewTemplate;
+use App\Http\Resources\ReviewTemplateResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,9 +11,9 @@ class ReviewTemplateController extends Controller
 {
     public function index()
     {
-        $templates = ReviewTemplate::orderBy('created_at', 'desc')->get();
+        $templates = ReviewTemplate::orderBy('created_at', 'desc')->paginate(10);
         return Inertia::render('review-templates/index', [
-            'templates' => $templates
+            'templates' => $templates->items()
         ]);
     }
 

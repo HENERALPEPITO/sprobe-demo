@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Http\Resources\EmployeeResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,24 +12,12 @@ class EmployeeController extends Controller
     public function index()
     {
         try {
-            $employees = Employee::orderBy('last_name')->get()->map(function ($employee) {
-                return [
-                    'id' => $employee->id,
-                    'first_name' => $employee->first_name,
-                    'last_name' => $employee->last_name,
-                    'email' => $employee->email,
-                    'position' => $employee->position,
-                    'department' => $employee->department,
-                    'hire_date' => $employee->hire_date,
-                    'status' => $employee->status,
-                ];
-            })->toArray();
-            
-            \Log::info('Employee count: ' . count($employees));
-            \Log::debug('Employee data: ' . json_encode($employees));
+            $employees = Employee::with('files')
+                ->orderBy('last_name')
+                ->paginate(10);
             
             return Inertia::render('Employees/index', [
-                'employees' => $employees
+                'employees' => $employees->items()
             ]);
         } catch (\Exception $e) {
             \Log::error('Error fetching employees: ' . $e->getMessage());

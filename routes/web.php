@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ReviewTemplateController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\FileUploadController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -25,6 +26,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('review-templates', [ReviewTemplateController::class, 'store'])->name('review-templates.store');
     Route::put('review-templates/{reviewTemplate}', [ReviewTemplateController::class, 'update'])->name('review-templates.update');
     Route::delete('review-templates/{reviewTemplate}', [ReviewTemplateController::class, 'destroy'])->name('review-templates.destroy');
+
+    // File upload routes
+    Route::post('files', [FileUploadController::class, 'store'])->name('files.store');
+    Route::get('files/{fileUpload}/download', [FileUploadController::class, 'download'])->name('files.download');
+    Route::delete('files/{fileUpload}', [FileUploadController::class, 'destroy'])->name('files.destroy');
 });
 
 require __DIR__.'/settings.php';

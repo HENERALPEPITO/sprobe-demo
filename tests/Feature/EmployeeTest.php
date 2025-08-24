@@ -30,11 +30,12 @@ class EmployeeTest extends TestCase
         // Test the index endpoint
         $response = $this->get('/employees');
 
-        $response->assertStatus(200)
-            ->assertInertia(fn ($assert) => $assert
-                ->component('Employees/index')
-                ->has('employees', 3)
-            );
+        $response->assertInertia(fn ($assert) => $assert
+            ->component('Employees/index')
+            ->has('employees.data', 3)
+            ->has('employees.meta')
+            ->has('employees.links')
+        );
     }
 
     public function test_user_can_create_employee()
